@@ -260,11 +260,11 @@ class FCMDeviceQuerySet(models.query.QuerySet):
 
 FCMDeviceManager = _FCMDeviceManager.from_queryset(FCMDeviceQuerySet)
 
-
-class DeviceType(models.TextChoices):
-    IOS = "ios", "ios"
-    ANDROID = "android", "android"
-    WEB = "web", "web"
+DeviceType =  [
+    ('ios', 'ios'),
+    ('android', 'android'),
+    ('web', 'web')
+    ]
 
 
 class AbstractFCMDevice(Device):
@@ -280,7 +280,7 @@ class AbstractFCMDevice(Device):
         verbose_name=_("Registration token"),
         unique=not SETTINGS["MYSQL_COMPATIBILITY"],
     )
-    type = models.CharField(choices=DeviceType.choices, max_length=10)
+    type = models.CharField(choices=DeviceType, max_length=10)
     objects: "FCMDeviceQuerySet" = FCMDeviceManager()
 
     class Meta:
